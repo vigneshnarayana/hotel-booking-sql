@@ -1,0 +1,515 @@
+USE [TEST]
+GO
+/****** Object:  Table [dbo].[BookingDiscount]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BookingDiscount](
+       [Hotel_Id] [varchar](500) NOT NULL,
+       [Room_Code] [varchar](500) NOT NULL,
+       [Booking_code] [varchar](500) NOT NULL,
+       [Booking_Desc] [varchar](500) NOT NULL,
+       [Booking_Discount_percentage] [varchar](500) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+       [Hotel_Id] ASC,
+       [Room_Code] ASC,
+       [Booking_code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Cancellation]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cancellation](
+       [Hotel_Id] [varchar](500) NOT NULL,
+       [Room_Code] [varchar](500) NOT NULL,
+       [Cancellation_code] [varchar](500) NULL,
+       [Cancellation_Desc] [varchar](500) NULL,
+       [Cancellation_Percentage] [varchar](500) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DATE]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DATE](
+       [DATE] [date] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FacilityDescription]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FacilityDescription](
+       [Facility_ID] [varchar](500) NOT NULL,
+       [Facility_Desc] [nvarchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+       [Facility_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Hotels]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Hotels](
+       [Hotel_ID] [varchar](500) NOT NULL,
+       [Hotel_Name] [varchar](500) NOT NULL,
+       [Address_Line_1] [varchar](8000) NOT NULL,
+       [Area] [varchar](500) NOT NULL,
+       [City] [varchar](500) NOT NULL,
+       [Country] [varchar](500) NOT NULL,
+       [Zip_Code] [bigint] NOT NULL,
+       [Manger_Name] [varchar](500) NULL,
+       [Phone] [bigint] NOT NULL,
+       [Email] [nvarchar](500) NOT NULL,
+       [Website] [nvarchar](500) NULL,
+       [Facility_Id] [varchar](500) NULL,
+PRIMARY KEY CLUSTERED 
+(
+       [Hotel_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ReservationDetails]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ReservationDetails](
+       [ROWID] [bigint] IDENTITY(1,1) NOT NULL,
+       [Booking_ID] [varchar](8000) NOT NULL,
+       [Login_ID] [varchar](500) NULL,
+       [Hotel_ID] [varchar](500) NULL,
+       [Room_Code] [varchar](500) NULL,
+       [Guest_Name] [varchar](8000) NOT NULL,
+       [Number_of_rooms_booked] [bigint] NOT NULL,
+       [INX_NO] [bigint] NULL,
+       [Number_of_rooms_cancelled] [bigint] NULL,
+       [Check_In_Date] [datetime] NOT NULL,
+       [Check_Out_Date] [datetime] NOT NULL,
+       [Booking_Amount] [float] NOT NULL,
+       [Booking_Date] [datetime] NOT NULL,
+       [Cancellation_Date] [datetime] NULL,
+       [Cancellation_Code] [varchar](500) NULL,
+       [Cancellation_Charge] [float] NULL,
+       [Refund_Amount] [float] NULL,
+       [Transaction_ID] [nvarchar](500) NOT NULL,
+       [Payment_Status] [varchar](500) NOT NULL,
+       [Payment_Mode] [varchar](500) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Rooms]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Rooms](
+       [Hotel_ID] [varchar](500) NOT NULL,
+       [Room_Code] [varchar](500) NOT NULL,
+       [Room_Type] [varchar](500) NOT NULL,
+       [Total_Number_of_Rooms] [bigint] NOT NULL,
+       [Room_Rent] [float] NULL,
+       [Occupancy_Allowed] [bigint] NULL,
+       [Rooms_Available_Currently] [bigint] NULL,
+PRIMARY KEY CLUSTERED 
+(
+       [Hotel_ID] ASC,
+       [Room_Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+       [Login_ID] [varchar](500) NOT NULL,
+       [First_Name] [varchar](500) NOT NULL,
+       [Last_Name] [varchar](500) NOT NULL,
+       [Password] [varbinary](8000) NOT NULL,
+       [Mail_ID] [nvarchar](500) NOT NULL,
+       [Phone] [bigint] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+       [Login_ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+       [Login_ID] ASC,
+       [Mail_ID] ASC,
+       [Phone] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[BookingDiscount]  WITH CHECK ADD FOREIGN KEY([Hotel_Id], [Room_Code])
+REFERENCES [dbo].[Rooms] ([Hotel_ID], [Room_Code])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Cancellation]  WITH CHECK ADD FOREIGN KEY([Hotel_Id], [Room_Code])
+REFERENCES [dbo].[Rooms] ([Hotel_ID], [Room_Code])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD FOREIGN KEY([Facility_Id])
+REFERENCES [dbo].[FacilityDescription] ([Facility_ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ReservationDetails]  WITH CHECK ADD FOREIGN KEY([Login_ID])
+REFERENCES [dbo].[Users] ([Login_ID])
+ON UPDATE SET NULL
+ON DELETE SET NULL
+GO
+ALTER TABLE [dbo].[ReservationDetails]  WITH CHECK ADD FOREIGN KEY([Hotel_ID], [Room_Code])
+REFERENCES [dbo].[Rooms] ([Hotel_ID], [Room_Code])
+ON UPDATE SET NULL
+ON DELETE SET NULL
+GO
+ALTER TABLE [dbo].[Rooms]  WITH CHECK ADD FOREIGN KEY([Hotel_ID])
+REFERENCES [dbo].[Hotels] ([Hotel_ID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD CHECK  (([Email] like '%@%'))
+GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD CHECK  ((len([Phone])=(10)))
+GO
+ALTER TABLE [dbo].[Hotels]  WITH CHECK ADD CHECK  ((len([Zip_Code])=(6)))
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD CHECK  (([Mail_ID] like '%@%'))
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD CHECK  ((len([Phone])=(10)))
+GO
+/****** Object:  StoredProcedure [dbo].[uspAddHotel]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[uspAddHotel]
+    @pHotel_Name   VARCHAR(500),
+    @pAddress_Line_1   VARCHAR(8000),
+    @pArea   VARCHAR(500),
+    @pCity   VARCHAR(500),
+    @pCountry   VARCHAR(500) ,
+    @pZip_Code Bigint ,
+    @pManger_Name   VARCHAR(500),
+    @pPhone  Bigint ,
+    @pEmail    NVARCHAR(500),
+    @pWebsite   NVARCHAR(500),
+    @pFacility_Id    VARCHAR(500),
+    @OutputMessage NVARCHAR(250)='' OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON
+
+       BEGIN TRY
+       
+       declare @pHotel_ID varchar(max)='HTL_'+CAST((SELECT COUNT(*)+1 FROM Hotels) AS VARCHAR(MAX))
+        INSERT INTO dbo.Hotels (Hotel_ID,Hotel_Name,Address_Line_1,Area,City,Country,Zip_Code,Manger_Name,Phone,Email,Website,Facility_Id)
+        VALUES(@pHotel_ID,@pHotel_Name,@pAddress_Line_1,@pArea,@pCity,@pCountry,@pZip_Code,@pManger_Name,@pPhone,@pEmail,@pWebsite,@pFacility_Id)
+
+        SET @OutputMessage='New Hotel created Successfully'
+              select  @OutputMessage
+    END TRY
+    BEGIN CATCH
+          declare @Error_Message varchar(max)=ERROR_MESSAGE() 
+          
+        SET @OutputMessage=case when @Error_Message like '%violation%primary%key%constraint%' then 'Hotel Already exist'
+                                                                                                   when @Error_Message like '%conflicted %Check constraint %phone%' then 'Invalid Phone Number'
+                                                                                                         when @Error_Message like '%conflicted %Check constraint%ZIP%' then 'Invalid ZIP Code' 
+                                                                                                         when @Error_Message like '%conflicted %Check constraint%mail%' then 'Invalid mail Id' 
+                                                                                                         else @Error_Message end
+
+
+              select @OutputMessage
+    END CATCH
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[uspAddRooms]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[uspAddRooms]
+    @pHotel_ID [varchar](500) ,
+       @pRoom_Code [varchar](500) ,
+       @pRoom_Type [varchar](500),
+       @pTotal_Number_of_Rooms [bigint],
+       @pRoom_Rent [float] ,
+       @pOccupancy_Allowed [bigint] ,
+       @pRooms_Available_Currently [bigint] ,
+    @OutputMessage NVARCHAR(250)='' OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON
+
+       BEGIN TRY
+       
+
+        INSERT INTO dbo.Rooms (Hotel_ID,Room_Code,Room_Type,Total_Number_of_Rooms,Room_Rent,Occupancy_Allowed,Rooms_Available_Currently)
+        VALUES(@pHotel_ID,@pRoom_Code,@pRoom_Type,@pTotal_Number_of_Rooms,@pRoom_Rent,@pOccupancy_Allowed,Null)
+
+        SET @OutputMessage='New Rooms added to the Hotel Successfully'
+              select  @OutputMessage
+    END TRY
+    BEGIN CATCH
+          declare @Error_Message varchar(max)=ERROR_MESSAGE() 
+          
+        SET @OutputMessage=case when @Error_Message like '%FOREIGN KEY%constraint%' then 'Hotel Doesnt exist'
+                                                                                                    else @Error_Message end
+
+
+              select @OutputMessage
+    END CATCH
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[uspAddUser]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[uspAddUser]
+    @pLogin_ID   VARCHAR(500),
+    @pFirst_Name VARCHAR(500),
+    @pLast_Name  VARCHAR(500) , 
+    @pPassword   NVARCHAR(500) ,
+    @pMail_ID    NVARCHAR(500),
+    @pPhone      Bigint,
+    @OutputMessage NVARCHAR(250)='' OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON
+dECLARE @password_Check NVARCHAR(500) =(SELECT CASE WHEN @pPassword  like '%[0-9]%' and @pPassword like '%[A-Z]%' and @pPassword like '%[!@#$%a^&*()-_+=.,;:''''"''`~]%' and len(@pPassword) >= 8 
+                                                                                         THEN 'Password Ok' else 'Password should be combination of Numberic,Special character and 8 digits' end)
+if (@password_Check='Password Ok')
+begin
+       BEGIN TRY
+       
+     
+
+        INSERT INTO dbo.Users (Login_ID,First_Name, Last_Name, Password,Mail_ID, Phone)
+        VALUES(@pLogin_ID,@pFirst_Name,@pLast_Name, HASHBYTES('md5', @pPassword), @pMail_ID, @pPhone)
+
+        SET @OutputMessage='User created Successfully'
+              select  @OutputMessage
+    END TRY
+    BEGIN CATCH
+          declare @Error_Message varchar(max)=ERROR_MESSAGE() 
+          
+        SET @OutputMessage= case when @Error_Message like '%violation%primary%key%constraint%' then 'User Already exist'
+                                                                                                   when @Error_Message like '%conflicted %Check constraint %phone%' then 'Invalid Phone Number'
+                                                                                                         when @Error_Message like '%conflicted %Check constraint%mail%' then 'Invalid mail Id' 
+                                                                                                         else @Error_Message end
+
+
+              select @OutputMessage
+    END CATCH
+end
+if (@password_Check!='Password Ok')
+begin
+RAISERROR(@password_Check,16,1);
+
+set @OutputMessage=@password_Check
+
+select @OutputMessage
+end
+END
+
+
+
+
+--exec  uspAddUser 'ts12','Test2','1','gOODD12342%','test2@gmail.com',1234527890
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[uspBooking]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[uspBooking]
+       @pLogin_ID VARCHAR(500) ,
+       @pHotel_ID VARCHAR(500) ,
+       @pRoom_Code varchar(500) , 
+       @pGuest_Name varchar(8000) ,
+       @pNumber_of_rooms_booked bigint ,
+       @pCheck_In_Date  datetime ,
+       @pCheck_Out_Date datetime ,
+       @pTransaction_ID nvarchar(500),
+       @pPayment_Status varchar(500), 
+       @pPayment_Mode varchar(500),
+    @OutputMessage NVARCHAR(250)='' OUTPUT
+AS
+BEGIN
+    SET NOCOUNT ON
+
+       BEGIN TRY
+       DECLARE @pBooking_ID VARCHAR(MAX)=(select 'BK'+CAST(count(ROWID)+1 AS VARCHAR(MAX)) from [ReservationDetails])
+       DECLARE @pBooking_Amount float=(select Room_Rent*@pNumber_of_rooms_booked from Rooms where Hotel_ID=@pHotel_ID and Room_Code=@pRoom_Code)
+       
+       DECLARE @pRooms_Available int=(select Rooms_Available_Currently from Rooms where Hotel_ID=@pHotel_ID and Room_Code=@pRoom_Code )
+       declare @pBooking_Date datetime =getdate()
+       
+       DECLARE @PrimaryCheck varchar(max) =(select case when @pCheck_In_Date <=GETDATe() or  @pCheck_Out_Date<@pCheck_In_Date or @pCheck_Out_Date<=getdate() then 'Checkin & Checkout dates should be greater than today'
+                                                                                         when @pCheck_out_Date<=@pCheck_In_Date then 'Checkout date should be greate than checkin date'
+                                                                                         when @pNumber_of_rooms_booked >= @pRooms_Available then 'only '+cast(@pNumber_of_rooms_booked as varchar(max)) +'are available'
+                                                                                         when @pPayment_Status<>'Success' then 'Payment failed Kindly reinitiate payment'
+                                                                                         when @pCheck_In_Date> dateadd(m,3,getdate()) or @pCheck_Out_Date> dateadd(d,1,dateadd(m,3,getdate())) then 'Booking is allowed for only 3 Months'
+                                                                                         else 'Procced to Book' end      )
+
+       --SELECT  TR.*,RA.ROOMS_AVAILABLE
+       --INTO #Availability
+       --FROM
+       --(SELECT  * ,@pNumber_of_rooms_booked as Number_of_rooms_needed
+       --FROM DATE  A
+       --CROSS JOIN [dbo].[Rooms] B 
+       --WHERE DATE BETWEEN @pCheck_In_Date AND @pCheck_Out_Date AND Hotel_ID=@pHotel_ID AND Room_Code=@pRoom_Code) TR
+       --LEFT OUTER JOIN
+
+       --(select  DATE,Hotel_ID,Room_Code,isnull(SUM(Number_of_rooms_booked),0) AS ROOMS_AVAILABLE
+       --from date  
+       --     join ReservationDetails
+       --on date between Check_In_Date and Check_Out_Date
+       --     AND Hotel_ID=@pHotel_ID AND Room_Code=@pRoom_Code
+       --GROUP BY DATE,Hotel_ID,Room_Code) RA
+       --ON TR.DATE=RA.DATE
+       --AND TR.Room_Code=RA.Room_Code
+       --AND TR.Hotel_ID=RA.Hotel_ID
+
+       --select * from #Availability
+       --where  Total_Number_of_Rooms<>ROOMS_AVAILABLE
+       --and Total_Number_of_Rooms-(ROOMS_AVAILABLE-Number_of_rooms_needed)<0
+       
+       
+       
+       
+       declare @INX_Booking table
+              (
+              row_num bigint,
+              rooms int
+              )
+
+              declare @start int =1
+              declare @end int=@pNumber_of_rooms_booked
+
+              while (@start<=@end)
+              begin
+              insert into @INX_Booking
+              select @start,1
+
+              set @start=@start+1
+              end           
+                                                                                      
+   if(@PrimaryCheck='Procced to Book')
+   begin 
+           INSERT INTO [dbo].[ReservationDetails] 
+              (  [Booking_ID]
+                ,[Login_ID]
+                ,[Hotel_ID]
+                ,[Room_Code]
+                ,[Guest_Name]
+                ,[Number_of_rooms_booked]
+                ,INX_NO
+                ,[Check_In_Date]
+                ,[Check_Out_Date]
+                ,[Booking_Amount]
+                ,[Booking_Date]
+                ,[Transaction_ID]
+                ,[Payment_Status]
+                ,[Payment_Mode])
+       
+          select Booking_ID,Login_ID,Hotel_ID,Room_Code,Guest_Name,1,b.row_num,Check_In_Date,Check_Out_Date,Booking_Amount/@pNumber_of_rooms_booked,Booking_Date,Transaction_ID,Payment_Status,Payment_Mode
+          from
+             (select @pBooking_ID as Booking_ID
+                ,@pLogin_ID as Login_ID
+                ,@pHotel_ID as Hotel_ID
+                ,@pRoom_Code as Room_Code
+                ,@pGuest_Name as Guest_Name
+              -- ,@pNumber_of_rooms_booked
+                ,@pCheck_In_Date as Check_In_Date
+                ,@pCheck_Out_Date as Check_Out_Date
+                ,@pBooking_Amount as Booking_Amount
+                ,@pBooking_Date as Booking_Date
+                ,@pTransaction_ID as Transaction_ID
+                ,@pPayment_Status as Payment_Status
+                ,@pPayment_Mode as Payment_Mode) a
+                cross join (select * from @INX_Booking) b
+
+        SET @OutputMessage='Room Booked Successfully'
+              select  @OutputMessage
+   end
+   if(@PrimaryCheck<>'Procced to Book')
+   begin 
+
+   select @PrimaryCheck
+   
+   end
+    END TRY
+    BEGIN CATCH
+          declare @Error_Message varchar(max)=ERROR_MESSAGE() 
+          
+        --SET @OutputMessage=case when @Error_Message like '%violation%primary%key%constraint%' then 'Hotel Already exist'
+                                                       --                                          when @Error_Message like '%conflicted %Check constraint %phone%' then 'Invalid Phone Number'
+                                                       --                                                when @Error_Message like '%conflicted %Check constraint%ZIP%' then 'Invalid ZIP Code' 
+                                                       --                                                when @Error_Message like '%conflicted %Check constraint%mail%' then 'Invalid mail Id' 
+                                                       --                                                else @Error_Message end
+
+
+              select @OutputMessage
+    END CATCH
+
+END
+GO
+/****** Object:  StoredProcedure [dbo].[uspLogin]    Script Date: 6/3/2019 11:50:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[uspLogin]
+    @pLogin_ID NVARCHAR(500),
+    @pPassword NVARCHAR(500)
+AS
+BEGIN
+
+    SET NOCOUNT ON
+
+    DECLARE @userID NVARCHAR(max)
+
+    IF EXISTS (SELECT TOP 1 Login_ID FROM [dbo].[Users] WHERE Login_ID=@pLogin_ID)
+    BEGIN
+        SET @userID=(SELECT Login_ID FROM [dbo].[Users] WHERE Login_ID=@pLogin_ID AND Password=HASHBYTES('MD5',cast(@pPassword as nvarchar(max))))
+
+       IF(@userID IS NULL)
+           select 'Incorrect password'
+       ELSE 
+           select 'User successfully logged in'
+
+    END
+    ELSE
+              select 'Invalid login'
+       
+
+END
+
+--exec uspLogin 'ts1','gOODD1234'
+
+GO
+
